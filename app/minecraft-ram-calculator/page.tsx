@@ -60,7 +60,7 @@ export default function RamCalculator() {
     "bg-[#235AB4] hover:bg-[#235AB4]/90 border-none ring-0";
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-12 md:py-16 space-y-4">
+    <div className="container mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-2 md:py-2 space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
         <Button
           variant="outline"
