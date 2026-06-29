@@ -11,8 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
-  Copy,
-  Check,
   Download,
   ExternalLink,
   Info,
@@ -21,22 +19,15 @@ import {
 } from "lucide-react";
 import { SkinViewer } from "skinview3d";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SKIN_GRABBER_URL ?? "http://localhost";
-
 export default function SkinGrabber() {
   const [searchValue, setSearchValue] = useState("");
   const [currentSearch, setCurrentSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [noAccountFound, setNoAccountFound] = useState(false);
   const [skinUrl, setSkinUrl] = useState("");
-  const [copied, setCopied] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const viewerRef = useRef<SkinViewer | null>(null);
-
-  const shareableLink = currentSearch
-    ? `${BASE_URL}/skin-grabber#ign=${currentSearch}`
-    : "";
 
   const initViewer = useCallback(
     (skinSrc: string, nameTag?: string) => {
@@ -124,12 +115,6 @@ export default function SkinGrabber() {
     if (e.key === " ") e.preventDefault();
   };
 
-  const copyLink = async () => {
-    await navigator.clipboard.writeText(shareableLink);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const buttonBase =
     "cursor-pointer transition-colors border-none ring-0 text-white";
   const buttonStyle = "bg-[#235AB4] hover:bg-[#235AB4]/90";
@@ -208,32 +193,6 @@ export default function SkinGrabber() {
             )}
           </div>
 
-          {/* Shareable link */}
-          {!loading && currentSearch && (
-            <div className="flex flex-col mt-6 sm:mt-8 items-center">
-              <h3 className="font-medium text-white text-base sm:text-lg text-center">
-                Shareable Link
-              </h3>
-              <div className="flex gap-2 sm:gap-3 mt-2 w-full max-w-md">
-                <input
-                  disabled
-                  value={shareableLink}
-                  className="flex-1 min-w-0 text-xs sm:text-sm text-gray-400 font-mono rounded-md p-2 bg-[#141517] h-[35px] border border-[#222F45] truncate"
-                />
-                <Button
-                  onClick={copyLink}
-                  className={`${buttonBase} ${buttonStyle} text-sm px-3 h-[35px] shrink-0`}
-                >
-                  {copied ? (
-                    <Check className="size-4" />
-                  ) : (
-                    <Copy className="size-4" />
-                  )}
-                  {copied ? "Copied" : "Copy"}
-                </Button>
-              </div>
-            </div>
-          )}
         </CardContent>
       </Card>
 
